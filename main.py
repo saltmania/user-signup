@@ -41,14 +41,7 @@ def validate_user():
    if (v_password==''):
        v_error = "Dont leave blank" 
 
-   #check if passwords match
-   if (password!=v_password):
-      password_error = "Passwords do not match"
-      v_verify="Passwords do not match"
-   if ((len(password)<min_len) | (len(password)>max_len)):
-         password_error= "Please use a User Name between 3 and 20 characters"   
-
-    #TO DO Verify Password Characters
+    #Verify Username Characters
    if (username!=blank):
       if space in username:
          username_error="I said no spaces!"
@@ -56,7 +49,16 @@ def validate_user():
          username_error= "Please use a User Name between 3 and 20 characters"
 
 
-    #To DO Verify Email Characters
+   #check if passwords match
+   if (password!=v_password):
+      password_error = "Passwords do not match"
+      v_error="Passwords do not match"
+   if ((len(password)<min_len) | (len(password)>max_len)):
+         password_error= "Please use a Password between 3 and 20 characters"
+
+
+
+    #Verify Email Characters
    if (user_email!=blank):
       if space in user_email:
          email_error="I said no spaces!"
@@ -65,7 +67,7 @@ def validate_user():
       if '.' not in user_email:
          email_error= "Valid emails have a . in them"
       if (len(user_email)<min_len) | (len(user_email)>max_len):
-         email_error= "Please use a User Name between 3 and 20 characters"
+         email_error= "Please use an Email between 3 and 20 characters"
 
 
 
@@ -79,8 +81,10 @@ def validate_user():
          email=user_email,
          username_error=username_error,
          password_error=password_error,
-         verify_error=password_error,
+         verify_error=v_error,
          email_error=email_error)
+
+
 
 # End User Validation Procedure
 
