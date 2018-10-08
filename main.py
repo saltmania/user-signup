@@ -45,6 +45,8 @@ def validate_user():
    if (password!=v_password):
       password_error = "Passwords do not match"
       v_verify="Passwords do not match"
+   if ((len(password)<min_len) | (len(password)>max_len)):
+         password_error= "Please use a User Name between 3 and 20 characters"   
 
     #TO DO Verify Password Characters
    if (username!=blank):
@@ -67,21 +69,26 @@ def validate_user():
 
 
 
-   #Place holder code if User gets all requirements right ... it will do something else later
+   #Place holder code if User gets all requirements right ...Redirect to Welcome Area
    if((username_error==blank) and (password_error==blank) and (v_error==blank) and (email_error==blank)):
-      username_error= 'SUCCESS!'
-      password_error= 'SUCCESS!'
-      v_error='SUCCESS!'
-      email_error='SUCCESS!'
-
-   template = jinja_env.get_template('signup_template.html')
-
-   return template.render(username_error=username_error,
-      password_error=password_error,
-      verify_error=password_error,
-      email_error=email_error)
+      new_user = username
+      return redirect('/welcome?new_user={0}'.format(new_user))
+   else:
+      template = jinja_env.get_template('signup_template.html')
+      return template.render(name=username,
+         email=user_email,
+         username_error=username_error,
+         password_error=password_error,
+         verify_error=password_error,
+         email_error=email_error)
 
 # End User Validation Procedure
+
+@app.route('/welcome')
+def welcome_newUser():
+    new_user = request.args.get('new_user')
+    return '<h1>Welcome, {0}!</h1>'.format(new_user)
+
 
 
 app.run()
