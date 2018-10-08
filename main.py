@@ -87,7 +87,8 @@ def validate_user():
 @app.route('/welcome')
 def welcome_newUser():
     new_user = request.args.get('new_user')
-    return '<h1>Welcome, {0}!</h1>'.format(new_user)
+    template = jinja_env.get_template('welcome.html')
+    return template.render(name=new_user)
 
 
 
